@@ -6,6 +6,7 @@ import com.hakan.core.npc.action.NpcAction;
 import com.hakan.core.npc.entity.NpcEntity;
 import com.hakan.core.npc.utils.NpcUtils;
 import com.hakan.core.pathfinder.Pathfinder;
+import com.hakan.core.protocol.ProtocolVersion;
 import com.hakan.core.renderer.Renderer;
 import com.hakan.core.skin.Skin;
 import com.hakan.core.utils.Validate;
@@ -67,8 +68,12 @@ public final class Npc {
 
         this.renderer = new Renderer(location, 30, viewers,
                 this::show, this::hide, renderer -> this.hide(renderer.getShownPlayers()));
+
+        Location hologramLocation = location.clone();
+        if(ProtocolVersion.getCurrentVersion() == ProtocolVersion.v1_20_R2)
+            hologramLocation.subtract(0, 10, 0);
         this.hologram = HCore.hologramBuilder("hcore_npc_hologram:" + id)
-                .location(location).setViewers(viewers)
+                .location(hologramLocation).setViewers(viewers)
                 .showEveryone(showEveryone).forceBuild();
 
         this.action = new NpcAction(this);
@@ -447,7 +452,9 @@ public final class Npc {
      */
     public Npc setSkin(@Nonnull Skin skin) {
         this.skin = Validate.notNull(skin, "skin cannot be null!");
+
         this.entity.updateSkin(this.renderer.getShownPlayers());
+
         return this;
     }
 
@@ -573,6 +580,7 @@ public final class Npc {
      */
     public Npc show(@Nonnull List<Player> players) {
         this.entity.show(Validate.notNull(players, "players cannot be null!"));
+
         return this;
     }
 

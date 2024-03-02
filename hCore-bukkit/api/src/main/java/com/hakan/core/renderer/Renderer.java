@@ -28,6 +28,7 @@ public final class Renderer {
     private Set<UUID> viewers;
     private Set<UUID> shownViewers;
 
+    private Consumer<List<Player>> customShowConsumer;
     private final Consumer<List<Player>> showConsumer;
     private final Consumer<List<Player>> hideConsumer;
     private final Consumer<Renderer> deleteConsumer;
@@ -74,6 +75,13 @@ public final class Renderer {
                     @Nonnull Consumer<Renderer> deleteConsumer) {
         this(location, radius, new HashSet<>(), showConsumer, hideConsumer, deleteConsumer);
         this.showEveryone = true;
+    }
+
+    /**
+     * Added by Shau
+     */
+    public void setCustomShowConsumer(Consumer<List<Player>> customShowConsumer) {
+        this.customShowConsumer = customShowConsumer;
     }
 
     /**
@@ -384,8 +392,13 @@ public final class Renderer {
                 }
             });
 
-            if (show.size() > 0)
+            if (show.size() > 0) {
+                if(this.customShowConsumer != null) {
+                    this.customShowConsumer.accept(show);
+                }
+
                 this.showConsumer.accept(show);
+            }
         }
 
         this.shownViewers = new HashSet<>(newShown);
