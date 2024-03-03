@@ -28,7 +28,7 @@ public final class Renderer {
     private Set<UUID> viewers;
     private Set<UUID> shownViewers;
 
-    private Consumer<List<Player>> customShowConsumer;
+    private Consumer<Player> customShowConsumer;
     private final Consumer<List<Player>> showConsumer;
     private final Consumer<List<Player>> hideConsumer;
     private final Consumer<Renderer> deleteConsumer;
@@ -80,7 +80,7 @@ public final class Renderer {
     /**
      * Added by Shau
      */
-    public void setCustomShowConsumer(Consumer<List<Player>> customShowConsumer) {
+    public void setCustomShowConsumer(Consumer<Player> customShowConsumer) {
         this.customShowConsumer = customShowConsumer;
     }
 
@@ -393,8 +393,10 @@ public final class Renderer {
             });
 
             if (show.size() > 0) {
-                if(this.customShowConsumer != null) {
-                    this.customShowConsumer.accept(show);
+                if (this.customShowConsumer != null) {
+                    for (Player player : show) {
+                        this.customShowConsumer.accept(player);
+                    }
                 }
 
                 this.showConsumer.accept(show);

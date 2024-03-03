@@ -17,12 +17,7 @@ import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -512,6 +507,15 @@ public final class Npc {
     public Npc playAnimation(@Nonnull Animation animation) {
         Validate.notNull(animation, "animation cannot be null!");
         this.entity.playAnimation(this.renderer.getShownPlayers(), animation);
+        return this;
+    }
+
+    /**
+     * Added by Shau
+     */
+    public Npc playAnimation(@Nonnull Animation animation, @Nonnull Player player) {
+        Validate.notNull(animation, "animation cannot be null!");
+        this.entity.playAnimation(Collections.singletonList(player), animation);
         return this;
     }
 
