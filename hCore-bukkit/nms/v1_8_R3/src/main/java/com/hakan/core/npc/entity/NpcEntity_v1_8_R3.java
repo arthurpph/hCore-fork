@@ -169,12 +169,12 @@ public final class NpcEntity_v1_8_R3 implements NpcEntity {
         gameProfile.getProperties().put("textures", new Property("textures", this.npc.getSkin().getTexture(), this.npc.getSkin().getSignature()));
         dataWatcher.watch(10, (byte) 127);
 
-        players.forEach(player -> this.scoreboard.getPlayerNameSet().add(player.getName()));
+//        players.forEach(player -> this.scoreboard.getPlayerNameSet().add(player.getName()));
         HCore.sendPacket(players,
                 new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, this.nmsPlayer),
                 new PacketPlayOutNamedEntitySpawn(this.nmsPlayer),
-                new PacketPlayOutEntityMetadata(this.getID(), dataWatcher, true));
-//                new PacketPlayOutScoreboardTeam(this.scoreboard, 0));
+                new PacketPlayOutEntityMetadata(this.getID(), dataWatcher, true),
+                new PacketPlayOutScoreboardTeam(this.scoreboard, 0));
         HCore.asyncScheduler().after(15)
                 .run(() -> HCore.sendPacket(players, new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, this.nmsPlayer)));
 
