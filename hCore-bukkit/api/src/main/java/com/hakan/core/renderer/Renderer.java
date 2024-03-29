@@ -79,6 +79,9 @@ public final class Renderer {
 
     /**
      * Added by Shau
+     * Custom show consumer executed when the renderer is shown to a new player
+     *
+     * @param customShowConsumer Custom consumer to be executed.
      */
     public void setCustomShowConsumer(Consumer<Player> customShowConsumer) {
         this.customShowConsumer = customShowConsumer;

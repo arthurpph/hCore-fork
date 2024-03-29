@@ -173,9 +173,9 @@ public final class NpcEntity_v1_8_R3 implements NpcEntity {
         HCore.sendPacket(players,
                 new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, this.nmsPlayer),
                 new PacketPlayOutNamedEntitySpawn(this.nmsPlayer),
-                new PacketPlayOutEntityMetadata(this.getID(), dataWatcher, true),
-                new PacketPlayOutScoreboardTeam(this.scoreboard, 0));
-        HCore.asyncScheduler().after(5)
+                new PacketPlayOutEntityMetadata(this.getID(), dataWatcher, true));
+//                new PacketPlayOutScoreboardTeam(this.scoreboard, 0));
+        HCore.asyncScheduler().after(15)
                 .run(() -> HCore.sendPacket(players, new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, this.nmsPlayer)));
 
         HCore.asyncScheduler().after(2)
